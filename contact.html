@@ -22,9 +22,9 @@
     <h1>Contact</h1>
     <p>Write if the survey is confusing, or if you want to ask about postage before you order. The email is <a href="mailto:orders@mypersonalcrystal.com">orders@mypersonalcrystal.com</a>. Clicking that should open a mail draft.</p>
     <p>Pat and Ngaire Bennett. Feilding, New Zealand. We read the mail when we are in from the section.</p>
-    <p>The form below stays on your computer. It does not send. Press the button and you will see a thank-you with your note written out.</p>
-    <noscript><p>The thank-you needs JavaScript. The email link above still works without it.</p></noscript>
-    <form id="contact-form" action="contact.html" method="post">
+    <p>The button sends the note to <a href="mailto:orders@mypersonalcrystal.com">orders@mypersonalcrystal.com</a>. If it goes through, you will see a thank-you on this page. If it does not, you will see an error.</p>
+    <noscript><p>Without JavaScript this still posts. You get a plain page back, instead of a box on this page. The email link above still opens a mail draft.</p></noscript>
+    <form id="contact-form" action="/api/contact" method="post">
       <label for="fullname">Your name</label>
       <input id="fullname" name="fullname" type="text" required autocomplete="name">
 

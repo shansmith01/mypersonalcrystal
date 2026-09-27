@@ -1,0 +1,7 @@
+.git
+.git/**
+worker
+wrangler.toml
+.assetsignore
+.wrangler
+node_modules

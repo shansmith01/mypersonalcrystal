@@ -20,11 +20,11 @@
   </header>
   <main>
     <h1>Order a block</h1>
-    <p>Fill this in if you want a small piece posted. This form does not send itself. When you press the button you will see a copy of what you asked for, on this page.</p>
+    <p>Fill this in if you want a small piece posted. The button sends it to <a href="mailto:orders@mypersonalcrystal.com">orders@mypersonalcrystal.com</a>. If it goes through, you will see a thank-you on this page. If it does not, you will see an error.</p>
     <p>You will pay postage (we work it out from the weight and your country) plus a flat customising fee of NZ$15.</p>
     <p id="prefill-note" hidden></p>
-    <noscript><p>Choosing from the survey link needs JavaScript. You can still read the lists and email us.</p></noscript>
-    <form id="order-form" action="order.html" method="post">
+    <noscript><p>Without JavaScript this still posts. You get a plain page back, instead of a box on this page. The survey link will not fill the lists in.</p></noscript>
+    <form id="order-form" action="/api/order" method="post">
       <label for="fullname">Your name</label>
       <input id="fullname" name="fullname" type="text" required autocomplete="name">
 

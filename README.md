@@ -2,7 +2,7 @@
 
 A small static website for Home Block Crystals, a mum-and-dad shop in Feilding, New Zealand. Pat and Ngaire Bennett post a cheap crystal or a lump of cheap metal. The buyer pays postage and a flat customising fee of NZ$15. A short birth survey (date, rough time, town and country) picks a tropical sun-sign stone and a cheap metal.
 
-The site is plain HTML, one CSS file (`style.css`) and one JavaScript file (`site.js`). Forms stay in the browser. Nothing is built and nothing is sent to a server.
+The site is plain HTML, one CSS file (`style.css`) and one JavaScript file (`site.js`). The birth survey stays in the browser and is not emailed. The order form and the contact form post to a Cloudflare Worker, which sends the mail with Cloudflare Email Service. There is no frontend build.
 
 ## Run it locally
 
@@ -16,14 +16,20 @@ Open http://127.0.0.1:8742
 
 Photo credits are in `images/CREDITS.txt`.
 
-## Cloudflare Pages
+## Cloudflare
 
-The folder is already the finished site. Pages does not need a build.
+The HTML is served as Worker static assets. `worker/index.js` handles `POST /api/order` and `POST /api/contact`. There is no build step and no package.json.
 
-1. Create a Pages project and connect the Git repository, or upload this folder.
-2. Leave the build command empty. There is no package install and nothing to compile.
-3. Set the build output directory to the site root (`/`), where the HTML files sit next to `style.css`, `site.js` and `images/`.
-4. Deploy. Pages publishes those files as they are.
-5. Later changes deploy the same way: no build step, output is still the site root.
-6. Attach the custom domain mypersonalcrystal.com in the project after the first deploy. There is still no build step. The files do not change.
-7. Preview deploys use that same empty build command and the same root output.
+Mail uses the Email Service Workers API: the `send_email` binding named `EMAIL`, then `env.EMAIL.send()`. From and To are both `orders@mypersonalcrystal.com`. The visitor's address is Reply-To. This is not Email Routing forwarding.
+
+Deploy from this folder, once the domain is onboarded:
+
+```bash
+npx wrangler deploy
+```
+
+1. The domain mypersonalcrystal.com has to be on the Cloudflare account, and the account has to use Cloudflare DNS. Email Service requires that.
+2. In the dashboard go to Compute > Email Service > Email Sending, choose Onboard Domain, pick mypersonalcrystal.com, and let Cloudflare add its records. Do not type those records in by hand.
+3. Outbound Email Service is documented as a Workers Paid feature. The account needs that plan if the dashboard still says so.
+4. `npx wrangler login`, then `npx wrangler deploy`. Attach mypersonalcrystal.com to this Worker so the pages and `/api/order` and `/api/contact` are on the same host.
+5. The local Python server only serves the files. On this machine the form will show an error, because the Worker is not running here. That is not a sent message.

@@ -273,6 +273,42 @@ function initSurvey() {
   });
 }
 
+function postShopForm(url, payload) {
+  return fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify(payload)
+  }).then(function (res) {
+    return res.json().then(function (data) {
+      var sent = res.ok && data && data.ok === true;
+      return {
+        ok: sent,
+        error: (data && data.error) || "The message did not send. Please write to orders@mypersonalcrystal.com yourself."
+      };
+    }, function () {
+      return {
+        ok: false,
+        error: "The message did not send. Please write to orders@mypersonalcrystal.com yourself."
+      };
+    });
+  }, function () {
+    return {
+      ok: false,
+      error: "The message did not send. Please write to orders@mypersonalcrystal.com yourself."
+    };
+  });
+}
+
+function showFormError(thanks, message) {
+  clearNode(thanks);
+  thanks.hidden = false;
+  thanks.appendChild(el("h2", "Sorry"));
+  thanks.appendChild(el("p", message));
+}
+
 function initOrder() {
   var form = document.getElementById("order-form");
   var thanks = document.getElementById("thanks");
@@ -294,43 +330,53 @@ function initOrder() {
   form.addEventListener("submit", function (event) {
     event.preventDefault();
     if (!form.crystal.value || !form.metal.value) {
-      clearNode(thanks);
-      thanks.hidden = false;
-      thanks.appendChild(el("p", "Please choose a crystal and a metal."));
+      showFormError(thanks, "Please choose a crystal and a metal.");
       return;
     }
 
     var crystalText = form.crystal.options[form.crystal.selectedIndex].text;
     var metalText = form.metal.options[form.metal.selectedIndex].text;
     var noteText = form.note.value.trim();
-    var address = el("p", "Postal address: " + form.address.value.trim());
-    address.style.whiteSpace = "pre-wrap";
-
+    var payload = {
+      fullname: form.fullname.value.trim(),
+      email: form.email.value.trim(),
+      address: form.address.value.trim(),
+      country: form.country.value.trim(),
+      crystal: form.crystal.value,
+      metal: form.metal.value,
+      note: noteText
+    };
+    var button = form.querySelector("button[type=submit]");
+    button.disabled = true;
     clearNode(thanks);
     thanks.hidden = false;
-    thanks.appendChild(el("h2", "Thank you"));
-    thanks.appendChild(el("p", "Thank you, " + form.fullname.value.trim() + ". This form does not send anywhere. Here is the order as you wrote it, so you have a copy."));
-    thanks.appendChild(el("p", "Name: " + form.fullname.value.trim()));
-    thanks.appendChild(el("p", "Email: " + form.email.value.trim()));
-    thanks.appendChild(address);
-    thanks.appendChild(el("p", "Country: " + form.country.value.trim()));
-    thanks.appendChild(el("p", "Crystal: " + crystalText));
-    thanks.appendChild(el("p", "Metal: " + metalText));
-    thanks.appendChild(el("p", "Note: " + (noteText || "(none)")));
-    thanks.appendChild(el("p", "To pay: postage, worked out from the weight and the country, plus a flat customising fee of NZ$15."));
+    thanks.appendChild(el("p", "Sending…"));
 
-    var again = document.createElement("button");
-    again.type = "button";
-    again.textContent = "Change the form";
-    again.addEventListener("click", function () {
-      thanks.hidden = true;
-      form.hidden = false;
+    postShopForm("/api/order", payload).then(function (result) {
+      button.disabled = false;
+      if (!result.ok) {
+        showFormError(thanks, result.error);
+        return;
+      }
+
+      var address = el("p", "Postal address: " + payload.address);
+      address.style.whiteSpace = "pre-wrap";
+      clearNode(thanks);
+      thanks.hidden = false;
+      thanks.appendChild(el("h2", "Thank you"));
+      thanks.appendChild(el("p", "Thank you, " + payload.fullname + ". We sent this order to orders@mypersonalcrystal.com."));
+      thanks.appendChild(el("p", "Name: " + payload.fullname));
+      thanks.appendChild(el("p", "Email: " + payload.email));
+      thanks.appendChild(address);
+      thanks.appendChild(el("p", "Country: " + payload.country));
+      thanks.appendChild(el("p", "Crystal: " + crystalText));
+      thanks.appendChild(el("p", "Metal: " + metalText));
+      thanks.appendChild(el("p", "Note: " + (noteText || "(none)")));
+      thanks.appendChild(el("p", "To pay: postage, worked out from the weight and the country, plus a flat customising fee of NZ$15."));
+      form.hidden = true;
+      thanks.tabIndex = -1;
+      thanks.focus();
     });
-    thanks.appendChild(again);
-
-    form.hidden = true;
-    thanks.tabIndex = -1;
-    thanks.focus();
   });
 }
 
@@ -341,31 +387,38 @@ function initContact() {
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
-    var message = el("p", form.message.value.trim());
-    message.style.whiteSpace = "pre-wrap";
-
+    var payload = {
+      fullname: form.fullname.value.trim(),
+      email: form.email.value.trim(),
+      message: form.message.value.trim()
+    };
+    var button = form.querySelector("button[type=submit]");
+    button.disabled = true;
     clearNode(thanks);
     thanks.hidden = false;
-    thanks.appendChild(el("h2", "Thank you"));
-    thanks.appendChild(el("p", "Thank you, " + form.fullname.value.trim() + ". This form does not send anywhere. Here is the note as you wrote it."));
-    thanks.appendChild(el("p", "Name: " + form.fullname.value.trim()));
-    thanks.appendChild(el("p", "Email: " + form.email.value.trim()));
-    thanks.appendChild(el("p", "Message:"));
-    thanks.appendChild(message);
-    thanks.appendChild(el("p", "If you want us to read it, email orders@mypersonalcrystal.com."));
+    thanks.appendChild(el("p", "Sending…"));
 
-    var again = document.createElement("button");
-    again.type = "button";
-    again.textContent = "Change the message";
-    again.addEventListener("click", function () {
-      thanks.hidden = true;
-      form.hidden = false;
+    postShopForm("/api/contact", payload).then(function (result) {
+      button.disabled = false;
+      if (!result.ok) {
+        showFormError(thanks, result.error);
+        return;
+      }
+
+      var message = el("p", payload.message);
+      message.style.whiteSpace = "pre-wrap";
+      clearNode(thanks);
+      thanks.hidden = false;
+      thanks.appendChild(el("h2", "Thank you"));
+      thanks.appendChild(el("p", "Thank you, " + payload.fullname + ". We sent this to orders@mypersonalcrystal.com."));
+      thanks.appendChild(el("p", "Name: " + payload.fullname));
+      thanks.appendChild(el("p", "Email: " + payload.email));
+      thanks.appendChild(el("p", "Message:"));
+      thanks.appendChild(message);
+      form.hidden = true;
+      thanks.tabIndex = -1;
+      thanks.focus();
     });
-    thanks.appendChild(again);
-
-    form.hidden = true;
-    thanks.tabIndex = -1;
-    thanks.focus();
   });
 }
 

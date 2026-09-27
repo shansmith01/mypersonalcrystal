@@ -1,0 +1,14 @@
+name = "mypersonalcrystal"
+main = "worker/index.js"
+compatibility_date = "2026-09-27"
+
+# Static pages live in this folder. POST /api/* runs the worker first.
+[assets]
+directory = "."
+binding = "ASSETS"
+run_worker_first = [ "/api/*" ]
+
+# Cloudflare Email Service. From must be on a domain onboarded for Email Sending.
+[[send_email]]
+name = "EMAIL"
+allowed_sender_addresses = [ "orders@mypersonalcrystal.com" ]
