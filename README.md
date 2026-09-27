@@ -20,7 +20,7 @@ Photo credits are in `images/CREDITS.txt`.
 
 The HTML is served as Worker static assets. `worker/index.js` handles `POST /api/order` and `POST /api/contact`. There is no build step and no package.json.
 
-Mail uses the Email Service Workers API: the `send_email` binding named `EMAIL`, then `env.EMAIL.send()`. From and To are both `orders@mypersonalcrystal.com`. The visitor's address is Reply-To. This is not Email Routing forwarding.
+Mail uses the Email Service Workers API: the `send_email` binding named `EMAIL`, then `env.EMAIL.send()`. From is `orders@forms.mypersonalcrystal.com`. To is `orders@mypersonalcrystal.com`. The visitor's address is Reply-To. The public mailto stays `orders@mypersonalcrystal.com`. This is not Email Routing forwarding. There is no Worker route or custom domain on `forms.mypersonalcrystal.com`. The pages and `/api/*` stay on the same host.
 
 Deploy from this folder, once the domain is onboarded:
 
@@ -29,7 +29,7 @@ npx wrangler deploy
 ```
 
 1. The domain mypersonalcrystal.com has to be on the Cloudflare account, and the account has to use Cloudflare DNS. Email Service requires that.
-2. In the dashboard go to Compute > Email Service > Email Sending, choose Onboard Domain, pick mypersonalcrystal.com, and let Cloudflare add its records. Do not type those records in by hand.
+2. Email Sending is onboarded on forms.mypersonalcrystal.com. Let Cloudflare add its own records. Do not copy those records into this repo.
 3. Outbound Email Service is documented as a Workers Paid feature. The account needs that plan if the dashboard still says so.
 4. `npx wrangler login`, then `npx wrangler deploy`. Attach mypersonalcrystal.com to this Worker so the pages and `/api/order` and `/api/contact` are on the same host.
 5. The local Python server only serves the files. On this machine the form will show an error, because the Worker is not running here. That is not a sent message.

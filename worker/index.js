@@ -1,9 +1,10 @@
 // Cloudflare Email Service, Workers send_email binding.
 // https://developers.cloudflare.com/email-service/api/send-emails/workers-api/
-// From and To are the shop address. The visitor's address is Reply-To only.
-// The birth survey never reaches this worker.
+// From is the Email Sending subdomain. To is the public shop address.
+// The visitor's address is Reply-To only. The birth survey never reaches this worker.
 
-var SHOP = "orders@mypersonalcrystal.com";
+var FROM = "orders@forms.mypersonalcrystal.com";
+var TO = "orders@mypersonalcrystal.com";
 
 var CRYSTALS = {
   "clear-quartz": "Clear quartz",
@@ -136,8 +137,8 @@ async function deliver(request, env, mail) {
   }
   try {
     await env.EMAIL.send({
-      to: SHOP,
-      from: SHOP,
+      to: TO,
+      from: FROM,
       replyTo: mail.replyTo,
       subject: mail.subject,
       text: mail.text
