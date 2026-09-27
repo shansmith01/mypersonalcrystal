@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Order — Home Block Crystals</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <p class="shop"><a href="index.html">Home Block Crystals</a></p>
+    <p class="where">Pat and Ngaire Bennett, Feilding, New Zealand</p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="survey.html">Birth survey</a>
+      <a href="stones.html">Stones and metals</a>
+      <a href="order.html" aria-current="page">Order</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Order a block</h1>
+    <p>Fill this in if you want a small piece posted. This form does not send itself. When you press the button you will see a copy of what you asked for, on this page.</p>
+    <p>You will pay postage (we work it out from the weight and your country) plus a flat customising fee of NZ$15.</p>
+    <p id="prefill-note" hidden></p>
+    <noscript><p>Choosing from the survey link needs JavaScript. You can still read the lists and email us.</p></noscript>
+    <form id="order-form" action="order.html" method="post">
+      <label for="fullname">Your name</label>
+      <input id="fullname" name="fullname" type="text" required autocomplete="name">
+
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" required autocomplete="email">
+
+      <label for="address">Postal address</label>
+      <textarea id="address" name="address" required autocomplete="street-address"></textarea>
+
+      <label for="country">Country</label>
+      <input id="country" name="country" type="text" required autocomplete="country-name">
+
+      <label for="crystal">Crystal</label>
+      <select id="crystal" name="crystal" required>
+        <option value="">Please choose</option>
+        <option value="clear-quartz">Clear quartz</option>
+        <option value="amethyst">Amethyst</option>
+        <option value="rose-quartz">Rose quartz</option>
+        <option value="smoky-quartz">Smoky quartz</option>
+        <option value="citrine">Citrine</option>
+        <option value="tigers-eye">Tiger's eye</option>
+        <option value="carnelian">Carnelian</option>
+        <option value="red-jasper">Red jasper</option>
+        <option value="agate">Agate</option>
+        <option value="green-aventurine">Green aventurine</option>
+        <option value="obsidian">Obsidian</option>
+        <option value="fluorite">Fluorite</option>
+        <option value="sodalite">Sodalite</option>
+        <option value="howlite">Howlite</option>
+        <option value="hematite">Hematite</option>
+      </select>
+
+      <label for="metal">Metal</label>
+      <select id="metal" name="metal" required>
+        <option value="">Please choose</option>
+        <option value="aluminium">Aluminium</option>
+        <option value="iron">Iron</option>
+        <option value="copper">Copper</option>
+        <option value="zinc">Zinc</option>
+        <option value="tin">Tin</option>
+      </select>
+
+      <label for="note">A note (optional)</label>
+      <textarea id="note" name="note"></textarea>
+
+      <button type="submit">Write up this order</button>
+    </form>
+    <div id="thanks" hidden></div>
+  </main>
+  <footer>
+    <p>Home Block Crystals. Pat and Ngaire Bennett. Feilding, New Zealand.</p>
+    <p>Web address: mypersonalcrystal.com</p>
+    <p>Email <a href="mailto:orders@mypersonalcrystal.com">orders@mypersonalcrystal.com</a></p>
+    <p>Photos are other people's. The list is in <a href="images/CREDITS.txt">images/CREDITS.txt</a>.</p>
+  </footer>
+  <script src="site.js"></script>
+</body>
+</html>

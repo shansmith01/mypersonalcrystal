@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Birth survey — Home Block Crystals</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <p class="shop"><a href="index.html">Home Block Crystals</a></p>
+    <p class="where">Pat and Ngaire Bennett, Feilding, New Zealand</p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="survey.html" aria-current="page">Birth survey</a>
+      <a href="stones.html">Stones and metals</a>
+      <a href="order.html">Order</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Birth survey</h1>
+    <p>Put in the birthday, a rough time if you have one, and the town and country you were born in. Press the button. The answer stays on this page. We do not receive the form.</p>
+    <p>We use ordinary tropical sun signs. If you were born right on a changeover day, the sun may already have moved. Say so in the order note if you mind.</p>
+    <noscript><p>This page needs JavaScript to show the stone. The form still does not send anything to us.</p></noscript>
+    <form id="survey-form" action="survey.html" method="post">
+      <label for="dob">Date of birth</label>
+      <input id="dob" name="dob" type="date" required>
+
+      <label for="birthtime">Approximate time of birth</label>
+      <select id="birthtime" name="birthtime">
+        <option value="unknown">I don't know</option>
+        <option value="6">About 6 in the morning</option>
+        <option value="8">About 8 in the morning</option>
+        <option value="10">About 10 in the morning</option>
+        <option value="12">About midday</option>
+        <option value="14">About 2 in the afternoon</option>
+        <option value="16">About 4 in the afternoon</option>
+        <option value="18">About 6 in the evening</option>
+        <option value="20">About 8 in the evening</option>
+        <option value="22">About 10 at night</option>
+        <option value="0">About midnight</option>
+        <option value="2">About 2 in the morning</option>
+        <option value="4">About 4 in the morning</option>
+      </select>
+      <p>If you do not know the time, leave it on I don't know. We will still pick a metal.</p>
+
+      <label for="place">Birth location (town and country)</label>
+      <input id="place" name="place" type="text" autocomplete="off">
+
+      <button type="submit">Show my stone and metal</button>
+    </form>
+    <div id="result" hidden></div>
+  </main>
+  <footer>
+    <p>Home Block Crystals. Pat and Ngaire Bennett. Feilding, New Zealand.</p>
+    <p>Web address: mypersonalcrystal.com</p>
+    <p>Email <a href="mailto:orders@mypersonalcrystal.com">orders@mypersonalcrystal.com</a></p>
+    <p>Photos are other people's. The list is in <a href="images/CREDITS.txt">images/CREDITS.txt</a>.</p>
+  </footer>
+  <script src="site.js"></script>
+</body>
+</html>
