@@ -1,6 +1,6 @@
-# Home Block Crystals
+# Shannon Smith
 
-A small static website for Home Block Crystals, a mum-and-dad shop in Feilding, New Zealand. Pat and Ngaire Bennett post a cheap crystal or a lump of cheap metal. The buyer pays postage and a flat customising fee of NZ$15. A short birth survey (date, rough time, town and country) picks a tropical sun-sign stone and a cheap metal.
+A small static website for Shannon Smith in Tauranga, New Zealand. She posts a cheap crystal or a lump of cheap metal. The buyer pays postage and a flat customising fee of NZ$15. A short birth survey (date, rough time, town and country) picks a tropical sun-sign stone and a cheap metal.
 
 The site is plain HTML, one CSS file (`style.css`) and one JavaScript file (`site.js`). The birth survey stays in the browser and is not emailed. The order form and the contact form post to a Cloudflare Worker, which sends the mail with Cloudflare Email Service. There is no frontend build.
 

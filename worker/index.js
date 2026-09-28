@@ -76,7 +76,7 @@ async function sendOrder(request, env) {
   }
 
   var text = [
-    "Order from the Home Block Crystals form.",
+    "Order from the Shannon Smith form.",
     "",
     "Name: " + name.value,
     "Email: " + email.value,
@@ -116,7 +116,7 @@ async function sendContact(request, env) {
   }
 
   var text = [
-    "Message from the Home Block Crystals contact form.",
+    "Message from the Shannon Smith contact form.",
     "",
     "Name: " + name.value,
     "Email: " + email.value,
